@@ -1,3 +1,4 @@
+const path = require('path');
 module.exports = {
     // 项目部署的基础路径
     // 我们默认假设你的应用将会部署在域名的根部，
@@ -51,8 +52,27 @@ module.exports = {
 
     // 调整内部的 webpack 配置。
     // 查阅 https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli/webpack.md
-    chainWebpack: () => {},
-    configureWebpack: () => {},
+    chainWebpack: (config) => {
+        const svgRule = config.module.rule("svg");
+        svgRule.uses.clear();
+        svgRule
+            .use("svg-sprite-loader")
+            .loader("svg-sprite-loader")
+            .options({
+                symbolId:"icon-[name]",
+                include:["./src/icons"]
+            });
+    },
+    // configureWebpack: (config) => {
+    //     config.resolve = {
+    //         extensions:['.js','.json','.vue'],
+    //         alias:{
+    //             // 'vue':'vue/dist/vue.js',
+    //             '@':path.resolve(__dirname,'./src'),
+    //             '@c':path.resolve(__dirname,'./src/components')
+    //         }
+    //     }
+    // },
 
     // CSS 相关选项
     css: {

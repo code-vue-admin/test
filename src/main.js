@@ -5,9 +5,10 @@ import router from "./router";
 import store from "./store";
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import  "./css/reset.css"
-import  "./css/index.css"
-import "./styles/main.scss"
+import  "./css/reset.css";
+import  "./css/index.css";
+import "./styles/main.scss";
+import "./icons";
 
 Vue.use(ElementUI);
 Vue.use(VueCompositionApi);

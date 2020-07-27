@@ -1,5 +1,6 @@
 <template>
     <div id="nav-wrap">
+        <h1 class="logo"><img src="../../../assets/logo.png" alt=""></h1>
         <el-menu
           default-active="1-4-1"
           class="el-menu-vertical-demo"
@@ -15,7 +16,8 @@
                 <el-submenu v-if="!item.hidden" :key="item.id" :index="index +'' ">
                     <!--一级菜单-->
                     <template slot="title">
-                        <i :class="item.meta.icon"></i>
+<!--                        <i :class="item.meta.icon"></i>-->
+                        <svg-icon :iconClass="item.meta.icon" :className="item.meta.icon" />
                         <span slot="title">{{item.meta.name}}</span>
                     </template>
                     <!--子菜单-->
@@ -53,8 +55,14 @@
         }
     }
 </script>
-
-<style scoped>
+<style lang="scss" scoped>
+@import "../../../styles/config";
+.logo {
+    text-align: center;
+    img{
+        margin: 28px auto 25px;
+        width: 92px;}
+}
 #nav-wrap {
     position: fixed;
     top: 0;
@@ -62,7 +70,10 @@
     width: 200px;
     height: 100vh;
     background-color: #344a5f;
-
+    svg{
+        font-size: 20px;
+        margin-right: 12px;
+    }
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
