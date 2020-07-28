@@ -1,6 +1,6 @@
 <template>
     <div id="header-wrap">
-        <div class="pull-left header-icon"><svg-icon iconClass="menu" className="menu" /></div>
+        <div class="pull-left header-icon" @click="navMenuState"><svg-icon iconClass="menu" className="menu" /></div>
         <div class="pull-right">
             <div class="user-info pull-left" >
                 <img src="" alt="">
@@ -13,7 +13,15 @@
 
 <script>
     export default {
-        name: "Header"
+        name: "layoutHeader",
+        setup(props,{root}){
+            const navMenuState = () => {
+                root.$store.commit('SET_COLLAPSE')
+            }
+            return{
+                navMenuState
+            }
+        }
     }
 </script>
 
@@ -23,11 +31,18 @@
     position: fixed;
     top: 0;
     right: 0;
-    left: 200px;
+    left: $navMenu;
     height: 75px;
     background-color: #fff;
-    -webkit-box-shadow: 0 3px 16px 0 rgba(0,0,0,.1);
     line-height: 75px;
+    @include webkit(box-shadow, 0 3px 16px 0 rgba(0,0,0,.1));
+    @include webkit(transition, all .3s ease 0s);
+}
+.open {
+    #header-wrap {left: $navMenu;}
+}
+.close {
+    #header-wrap {left: $navMenuMin;}
 }
 .header-icon{
     padding: 0 32px;
@@ -44,6 +59,12 @@
     font-size: 14px;
     + .header-icon{
         padding: 0 28px;
+    }
+    img{
+        display: inline-block;
+        margin-bottom: -12px;
+        margin-right: 18px;
+        border-radius: 50px;
     }
 }
 </style>

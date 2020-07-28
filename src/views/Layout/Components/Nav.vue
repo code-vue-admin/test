@@ -4,8 +4,6 @@
         <el-menu
           default-active="1-4-1"
           class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
           :collapse="isCollapse"
           background-color="transparent"
           text-color="#fff"
@@ -29,27 +27,21 @@
 </template>
 
 <script>
-    import { reactive,ref,onMounted } from '@vue/composition-api';
+    import { reactive,ref,onMounted,computed } from '@vue/composition-api';
     export default {
+        //compiler
         name: "navMenu",
         setup(props,{ root }){
-            //data数据
-            const isCollapse = ref(false);
+            /**
+             * data数据
+             */
             const routers = reactive(root.$router.options.routes);
-            console.log(routers)
-
-            const handleOpen = (key, keyPath) =>{
-                console.log(key, keyPath);
-            }
-
-            const handleClose = (key, keyPath) =>{
-                console.log(key, keyPath);
-            }
-
+            /**
+             * computed 监听
+             */
+            const isCollapse = computed(() => root.$store.state.isCollapse);
             return{
                 isCollapse,
-                handleClose,
-                handleOpen,
                 routers
             }
         }
@@ -61,22 +53,29 @@
     text-align: center;
     img{
         margin: 28px auto 25px;
-        width: 92px;}
+        width: 92px;
+    }
 }
 #nav-wrap {
     position: fixed;
     top: 0;
     left: 0;
-    width: 200px;
     height: 100vh;
     background-color: #344a5f;
+    @include webkit(transition, all .3s ease 0s);
     svg{
         font-size: 20px;
-        margin-right: 12px;
+        margin-right: 10px;
     }
 }
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
-    min-height: 400px;
+.open {
+    #nav-wrap {width: $navMenu;}
 }
+.close {
+    #nav-wrap {width: $navMenuMin;}
+}
+/*.el-menu-vertical-demo:not(.el-menu--collapse) {*/
+/*    width: 200px;*/
+/*    min-height: 400px;*/
+/*}*/
 </style>
